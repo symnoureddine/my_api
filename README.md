@@ -6,7 +6,7 @@
     cd my_api
     composer install
 
-## Créer la BDD
+## Create database
 
     php bin/console doctrine:database:create
     php bin/console doctrine:schema:update --force
@@ -21,4 +21,5 @@
 
 
  # Launch tests
+
 ./vendor/bin/simple-phpunit
