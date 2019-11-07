@@ -3,44 +3,43 @@
 namespace Tests\AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use GuzzleHttp\HandlerStack;
-use GuzzleHttp\Client;
-use GuzzleHttp\Handler\MockHandler;
-use GuzzleHttp\Psr7\Response;
+
 
 class SubscriptionControllerTest extends WebTestCase
 {
 
     protected function setUp()
     {
-        $mock = new MockHandler([new Response(200, [])]);
-        $handler = HandlerStack::create($mock);
-        $this->client = new Client(['handler' => $handler]);
+        $this->client = new Client([
+            'base_uri' => 'http://127.0.0.1:8000',
+            'headers' => [
+                'Accept' => 'application/json; charset=utf-8'
+            ]
+        ]);
     }
-
 
     public function testgetSubscription()
     {
-
         $response = $this->client->get('/subscription/1');
         $this->assertEquals(200, $response->getStatusCode());
     }
 
-    public function testPostUser()
+    public function testPostSubscription()
     {
-        $response = $this->client->post('/subscription', [
+
+        $response = $this->client->post('/subscription/', [
             'json' => [
-                    'contact' => 1,
-                    'product' => 3,
-                    'beginDate' => '2014-09-27T18:30:49-0300',
-                    'endDate' => '2014-09-27T18:30:49-0300'
+                'contact' => 1,
+                'product' => 3,
+                'beginDate' => '2014-09-27T18:30:49-0300',
+                'endDate' => '2014-09-27T18:30:49-0300'
             ]
         ]);
-        $this->assertEquals(200, $response->getStatusCode());
+        $this->assertEquals(201, $response->getStatusCode());
     }
 
 
-    public function testPutUser()
+    public function testPutSubscription()
     {
         $response = $this->client->put('/subscription/2', [
             'json' => [
@@ -48,15 +47,14 @@ class SubscriptionControllerTest extends WebTestCase
                 'product' => 4,
                 'beginDate' => '2014-09-27T18:30:49-0300',
                 'endDate' => '2014-09-27T18:30:49-0300'
-        ]
-    	]);
+            ]
+        ]);
         $this->assertEquals(200, $response->getStatusCode());
     }
 
-    public function testDeleteUser()
+    public function testDeleteSubscription()
     {
-        $response = $this->client->delete('/subscription/3');
+        $response = $this->client->delete('/subscription/9');
         $this->assertEquals(200, $response->getStatusCode());
     }
-
 }

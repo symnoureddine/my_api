@@ -2,7 +2,7 @@
 
 ## Install
 
-    git clone https://github.com/jibundeyare/src-symfony-rest-api.git
+    git clone https://github.com/symnoureddine/my_api.git
     cd my_api
     composer install
 
@@ -21,4 +21,4 @@
 
 
  # Launch tests
-./vendor/bin/phpunit
+./vendor/bin/simple-phpunit

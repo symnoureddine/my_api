@@ -2,17 +2,19 @@
 
 namespace AppBundle\Entity;
 
-use AppBundle\Entity\Contact;
-use AppBundle\Entity\Product;
+
+use JMS\Serializer\Annotation\ExclusionPolicy;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
 use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * Product
  *
  * @ORM\Table(name="subscription")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\SubscriptionRepository")
+ * @ExclusionPolicy("all")
  */
 class Subscription
 {
@@ -23,7 +25,7 @@ class Subscription
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      *
-     * @Serializer\Expose
+     * 
      */
      private $id;
     
@@ -31,7 +33,6 @@ class Subscription
     /**
      * 
      * @Serializer\Expose
-     * @Serializer\Since("1.0")
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Contact")
      * @ORM\JoinColumn(name="contact_id", referencedColumnName="id")
      */
@@ -40,24 +41,25 @@ class Subscription
     /**
      * 
      * @Serializer\Expose
-     * @Serializer\Since("1.0")
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Product")
      * @ORM\JoinColumn(name="product_id", referencedColumnName="id")
      */
     private $product;
 
     /**
-     * @ORM\Column(name="begin_date", type="datetime",nullable=true)
      * @Serializer\Expose
-     * @Serializer\Since("1.0")
+     * @ORM\Column(name="begin_date", type="datetime",nullable=true)
+     * @Assert\DateTime
+
      */
     private $beginDate;
 
     /**
-     *
-     * @ORM\Column(name="end_date", type="datetime",nullable=true)
      * @Serializer\Expose
-     * @Serializer\Since("1.0")
+     * @ORM\Column(name="end_date", type="datetime",nullable=true)
+     * @Assert\DateTime
+     * @Assert\GreaterThan(propertyPath="beginDate")
+     * 
      */
     private $endDate;
 

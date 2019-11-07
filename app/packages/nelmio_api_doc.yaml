@@ -1,0 +1,23 @@
+nelmio_api_doc:
+    areas:
+        path_patterns: # an array of regexps
+            - ^/api(?!/doc$)
+        host_patterns:
+            - ^api\.
+
+nelmio_api_doc:
+    documentation:
+        host: http://127.0.0.1:8000
+        schemes: [http, https]
+        info:
+            title: My Api
+            description: This is Api Rest symfony 3.4!
+            version: 1.0.0
+        securityDefinitions:
+            Bearer:
+                type: apiKey
+                description: 'Value: Bearer {jwt}'
+                name: Authorization
+                in: header
+        security:
+            - Bearer: []

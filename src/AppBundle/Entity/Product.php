@@ -3,12 +3,16 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation\ExclusionPolicy;
+use JMS\Serializer\Annotation as Serializer;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Product
  *
  * @ORM\Table(name="product")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\ProductRepository")
+ * @ExclusionPolicy("all")
  */
 class Product
 {
@@ -24,7 +28,10 @@ class Product
     /**
      * @var string
      *
+     * @Serializer\Expose
      * @ORM\Column(name="label", type="string", length=255)
+     * @Assert\NotBlank
+     * 
      */
     private $label;
 

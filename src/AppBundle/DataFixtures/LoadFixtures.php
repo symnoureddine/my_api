@@ -14,7 +14,6 @@ class LoadFixtures extends Fixture
 {
     public function load(ObjectManager $manager)
     {
-        
         for ($i = 0; $i < 20; $i++) {
 
             $product = new Product();

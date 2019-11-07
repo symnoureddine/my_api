@@ -3,12 +3,16 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation\ExclusionPolicy;
+use JMS\Serializer\Annotation as Serializer;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Contact
  *
  * @ORM\Table(name="contact")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\ContactRepository")
+ * @ExclusionPolicy("all")
  */
 class Contact
 {
@@ -23,15 +27,21 @@ class Contact
 
     /**
      * @var string
-     *
+     * 
+     * @Serializer\Expose
      * @ORM\Column(name="name", type="string", length=255)
+     * @Assert\NotBlank
+     * 
      */
     private $name;
 
     /**
      * @var string
      *
+     * @Serializer\Expose
      * @ORM\Column(name="firstName", type="string", length=255)
+     * @Assert\NotBlank
+     * 
      */
     private $firstName;
 
