@@ -7,7 +7,7 @@ use AppBundle\Form\ProductType;
 use Doctrine\Common\Persistence\ObjectManager;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
-
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Symfony\Component\HttpFoundation\Response;
 use FOS\RestBundle\Controller\Annotations\Version;
 use Symfony\Component\Routing\Annotation\Route;
@@ -29,7 +29,21 @@ class ProductController extends AbstractFOSRestController
 
 
     /**
-     * 
+     * @ApiDoc(
+     *  resource=true,
+     *  description="get product",
+     *  section="Product",
+     *  requirements={
+     *         {
+     *             "name"="id",
+     *             "dataType"="integer",
+     *             "requirements"="\d+",
+     *             "description"="The product unique identifier."
+     *         }
+     *  },
+     *  input="AppBundle\Form\Type\ProductType",
+     *  output="AppBundle\Entity\Product"
+     * )
      * @Rest\Get(
      *       path="/{id}",
      *       name="app_product_get",
@@ -50,11 +64,18 @@ class ProductController extends AbstractFOSRestController
     }
 
 
-    /**
-     * @Rest\Post("/")
-     * @Rest\View(statusCode=Response::HTTP_CREATED)
-     * @ParamConverter("product",class="AppBundle\Entity\Product" , converter="fos_rest.request_body")
-     */
+   /**
+    * @ApiDoc(
+    * resource=true,
+    * description="Create a new product",
+    * section="Product",
+    * input="AppBundle\Form\Type\ProductType",
+    * output="AppBundle\Entity\Product"
+    * )
+    * @Rest\Post("/")
+    * @Rest\View(statusCode=Response::HTTP_CREATED)
+    * @ParamConverter("product",class="AppBundle\Entity\Product" , converter="fos_rest.request_body")
+    */
     public function postProduct(Product $product,Request $request)
     { 
         $form = $this->createForm(ProductType::class, $product);
@@ -78,6 +99,21 @@ class ProductController extends AbstractFOSRestController
 
 
     /**
+     * @ApiDoc(
+     * resource=true,
+     * description="Update product",
+     * section="Product",
+     * requirements={
+     *        {
+     *            "name"="id",
+     *            "dataType"="integer",
+     *            "requirements"="\d+",
+     *            "description"="The product unique identifier."
+     *        }
+     * },
+     * input="AppBundle\Form\Type\ContactType",
+     * output="AppBundle\Entity\Contact"
+     * )
      * @Rest\View(StatusCode = 200)
      * @Rest\Put(
      *      path  = "/{id}",
@@ -111,6 +147,19 @@ class ProductController extends AbstractFOSRestController
 
 
     /**
+     * @ApiDoc(
+     * resource=true,
+     * description="Delete product",
+     * section="Product",
+     * requirements={
+     *        {
+     *            "name"="id",
+     *            "dataType"="integer",
+     *            "requirements"="\d+",
+     *            "description"="The product unique identifier."
+     *        }
+     * }
+     * )
      * @Rest\View(StatusCode = 200)
      * @Rest\Delete(
      *     path = "/{id}",

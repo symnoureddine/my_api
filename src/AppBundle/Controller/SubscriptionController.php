@@ -34,7 +34,7 @@ class SubscriptionController extends AbstractFOSRestController
      * 
      * @ApiDoc(
      *  resource=true,
-     *  description="Create a new Subscription",
+     *  description="get subscription",
      *  section="Subscription",
      *  requirements={
      *         {
@@ -70,6 +70,14 @@ class SubscriptionController extends AbstractFOSRestController
 
 
     /**
+     * 
+     * @ApiDoc(
+     * resource=true,
+     * description="Create a new Subscription",
+     * section="Subscription",
+     * input="AppBundle\Form\Type\SubscriptionType",
+     * output="AppBundle\Entity\Subscription"
+     * )
      * @Rest\Post("/")
      * @Rest\View(statusCode=Response::HTTP_CREATED)
      * 
@@ -100,6 +108,21 @@ class SubscriptionController extends AbstractFOSRestController
 
 
     /**
+     * @ApiDoc(
+     * resource=true,
+     * description="Update  Subscription",
+     * section="Subscription",
+     * requirements={
+     *        {
+     *            "name"="id",
+     *            "dataType"="integer",
+     *            "requirements"="\d+",
+     *            "description"="The subscription unique identifier."
+     *        }
+     * },
+     * input="AppBundle\Form\Type\SubscriptionType",
+     * output="AppBundle\Entity\Subscription"
+     * )
      * @Rest\Put(
      *       path = "/{id}",
      *       name = "app_subscription_put",
@@ -137,6 +160,19 @@ class SubscriptionController extends AbstractFOSRestController
 
 
     /**
+     * @ApiDoc(
+     * resource=true,
+     * description="Delete Subscription",
+     * section="Subscription",
+     * requirements={
+     *        {
+     *            "name"="id",
+     *            "dataType"="integer",
+     *            "requirements"="\d+",
+     *            "description"="The subscription unique identifier."
+     *        }
+     * }
+     * )
      * @Rest\View(StatusCode = 204)
      * @Rest\Delete(
      *     path = "/{id}",

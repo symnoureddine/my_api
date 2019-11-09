@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 use FOS\RestBundle\Controller\Annotations\Version;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 
@@ -29,7 +30,21 @@ class ContactController extends AbstractFOSRestController
 
 
     /**
-     * 
+     * @ApiDoc(
+     *  resource=true,
+     *  description="get contact",
+     *  section="Contact",
+     *  requirements={
+     *         {
+     *             "name"="id",
+     *             "dataType"="integer",
+     *             "requirements"="\d+",
+     *             "description"="The contact unique identifier."
+     *         }
+     *  },
+     *  input="AppBundle\Form\Type\ContactType",
+     *  output="AppBundle\Entity\Contact"
+     * )
      * @Rest\Get(
      *       path="/{id}",
      *       name="app_contact_get",
@@ -49,6 +64,13 @@ class ContactController extends AbstractFOSRestController
     }
 
    /**
+    * @ApiDoc(
+    * resource=true,
+    * description="Create a new contact",
+    * section="Contact",
+    * input="AppBundle\Form\Type\ContactType",
+    * output="AppBundle\Entity\Contact"
+    * )
     * @Rest\Post("/")
     * @Rest\View(statusCode=Response::HTTP_CREATED)
     * @ParamConverter("contact",class="AppBundle\Entity\Contact" , converter="fos_rest.request_body")
@@ -74,6 +96,21 @@ class ContactController extends AbstractFOSRestController
     }
 
     /**
+     * @ApiDoc(
+     * resource=true,
+     * description="Update contact",
+     * section="Contact",
+     * requirements={
+     *        {
+     *            "name"="id",
+     *            "dataType"="integer",
+     *            "requirements"="\d+",
+     *            "description"="The contact unique identifier."
+     *        }
+     * },
+     * input="AppBundle\Form\Type\ContactType",
+     * output="AppBundle\Entity\Contact"
+     * )
      * @Rest\View(StatusCode = 200)
      * @Rest\Put(
      *      path  = "/{id}",
@@ -111,6 +148,19 @@ class ContactController extends AbstractFOSRestController
 
 
     /**
+     * @ApiDoc(
+     * resource=true,
+     * description="Delete contact",
+     * section="Contact",
+     * requirements={
+     *        {
+     *            "name"="id",
+     *            "dataType"="integer",
+     *            "requirements"="\d+",
+     *            "description"="The contact unique identifier."
+     *        }
+     * }
+     * )
      * @Rest\View(StatusCode = 204)
      * @Rest\Delete(
      *     path = "/{id}",
