@@ -17,7 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 
 /**
- * @Route(path = "/product")
+ * @Route(path = "/api/product")
  * @Version("v1")
  */
 class ProductController extends AbstractFOSRestController
@@ -25,6 +25,31 @@ class ProductController extends AbstractFOSRestController
     public function __construct(ObjectManager $em)
     {
         $this->em = $em;
+    }
+
+   /**
+    * @ApiDoc(
+    *       resource=true,
+    *       description="get all product",
+    *       section="Product"
+    * )
+     * @Rest\Get(
+     *     path = "/",
+     *     name = "app_products_show"
+     * )
+     * @Rest\View
+     * 
+     */
+    public function getProducts()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $products = $em->getRepository(Product::class)->findAll();
+
+        if (!$products) {
+            throw new HttpException(400, "Invalid data");
+        }
+
+        return $products;
     }
 
 

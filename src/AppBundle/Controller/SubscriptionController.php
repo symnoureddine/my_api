@@ -16,7 +16,7 @@ use FOS\RestBundle\Controller\Annotations\Version;
 
 
 /**
- * @Route(path = "/subscription")
+ * @Route(path = "/api/subscription")
  * @Version("v1")
  */
 class SubscriptionController extends AbstractFOSRestController
@@ -27,6 +27,33 @@ class SubscriptionController extends AbstractFOSRestController
     public function __construct(ObjectManager $em)
     {
         $this->em = $em;
+    }
+
+
+
+   /**
+    * @ApiDoc(
+    *       resource=true,
+    *       description="get all subscription",
+    *       section="Subscription"
+    * )
+    * @Rest\Get(
+    *     path = "/",
+    *     name = "app_subscriptions_show"
+    * )
+    * @Rest\View
+    * 
+    */
+    public function getSubscriptions()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $subscriptions = $em->getRepository(Subscription::class)->findAll();
+
+        if (!$subscriptions) {
+            throw new HttpException(400, "Invalid data");
+        }
+
+        return $subscriptions;
     }
 
 

@@ -17,7 +17,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 
 /**
- * @Route(path = "/contact")
+ * @Route(path = "/api/contact")
  * @Version("v1")
  */
 class ContactController extends AbstractFOSRestController
@@ -26,6 +26,32 @@ class ContactController extends AbstractFOSRestController
     public function __construct(ObjectManager $em)
     {
         $this->em = $em;
+    }
+
+
+    /**
+    * @ApiDoc(
+    *       resource=true,
+    *       description="get all contact",
+    *       section="Contact"
+    * )
+    * @Rest\Get(
+    *     path = "/",
+    *     name = "app_contacts_show"
+    * )
+    * @Rest\View
+    * 
+    */
+    public function getContacts()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $contacts = $em->getRepository(Contact::class)->findAll();
+
+        if (!$contacts) {
+            throw new HttpException(400, "Invalid data");
+        }
+
+        return $contacts;
     }
 
 
