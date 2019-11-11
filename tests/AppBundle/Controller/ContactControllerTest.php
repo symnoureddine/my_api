@@ -4,6 +4,11 @@ namespace Tests\AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
+use GuzzleHttp\HandlerStack;
+use GuzzleHttp\Client;
+use GuzzleHttp\Handler\MockHandler;
+use GuzzleHttp\Psr7\Response;
+
 
 class ContactControllerTest extends  WebTestCase
 {
@@ -18,19 +23,28 @@ class ContactControllerTest extends  WebTestCase
         ]);
     }
 
-
     public function testgetContact()
     {
-        $response = $this->client->get('/contact/1');
+        $response = $this->client->get('/api/contact/1',[
+            'auth' => [
+                'user',
+                'user',
+            ]
+        ]);
+     
         $this->assertEquals(200, $response->getStatusCode());
     }
 
     public function testPostContact()
     {
-        $response = $this->client->post('/contact/', [
+        $response = $this->client->post('/api/contact/', [
+            'auth' => [
+                'user',
+                'user',
+            ],
             'json' => [
                 'name' =>  'name',
-                'first_name' => 'firstName'
+                'firstName' => 'firstName'
             ]
         ]);
         $this->assertEquals(201, $response->getStatusCode());
@@ -39,10 +53,14 @@ class ContactControllerTest extends  WebTestCase
 
     public function testPutContact()
     {
-        $response = $this->client->put('/contact/1', [
+        $response = $this->client->put('/api/contact/1', [
+            'auth' => [
+                'user',
+                'user',
+            ],
             'json' => [
                 'name' =>  'name put',
-                'first_name' => 'firstName put'
+                'firstName' => 'firstName put'
             ]
         ]);
         $this->assertEquals(200, $response->getStatusCode());
@@ -50,7 +68,12 @@ class ContactControllerTest extends  WebTestCase
 
     public function testDeleteContact()
     {
-        $response = $this->client->delete('/contact/9');
+        $response = $this->client->delete('/api/contact/2',[
+            'auth' => [
+                'user',
+                'user',
+            ],
+        ]);
         $this->assertEquals(200, $response->getStatusCode());
     }
 }
