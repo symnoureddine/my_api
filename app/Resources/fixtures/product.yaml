@@ -1,0 +1,3 @@
+AppBundle\Entity\Product:
+    product_{1..100}:
+       label: <jobTitle()>
